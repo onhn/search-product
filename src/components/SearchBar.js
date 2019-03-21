@@ -6,27 +6,27 @@ class SearchBar extends React.Component {
 		super(props);
 		console.log('SearchBar');
 
-		this.state = {
-			onlyInStock: false,
-		};
-
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(e) {
-		this.setState({onlyInStock: !this.state.onlyInStock });
-		this.props.onSearchTextChange(e.target.value, this.state.onlyInStock);
+		if (e.target.type === 'checkbox') {
+			this.props.onSearchTextChange(this.props.searchText, !this.props.onlyInStock);
+		} else {
+			this.props.onSearchTextChange(e.target.value, this.props.onlyInStock);
+		}
 	}
 
 	render() {
 		const searchText = this.props.searchText;
+		const onlyInStock = this.props.onlyInStock;
 
 		return (
 			<div>
 				<input type="text" value={searchText}
 					onChange={this.handleChange}/>
 				<label>
-					<input type="checkbox" value={this.state.onlyInStock} onChange={this.handleChange} />
+					<input type="checkbox" value={onlyInStock} onChange={this.handleChange} />
 					Only show products in stock
 				</label>
 			</div>
