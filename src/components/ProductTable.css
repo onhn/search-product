@@ -1,0 +1,16 @@
+.Product-table {
+	border: 3px solid yellow;
+}
+
+.Search-text {
+	border: 3px solid blue;
+}
+
+.Category {
+	border: 3px solid green;
+	color: green;
+}
+
+.Product-row {
+	border: 3px solid red;
+}

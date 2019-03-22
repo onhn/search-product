@@ -1,11 +1,18 @@
 import React from 'react';
 
+import './ProductTable.css';
+
 function ProductCategoryRow(props) {
-	return <h3>ProductCategoryRow</h3>;
+	return <tr className="Category"><td colSpan="2">{props.category}</td></tr>;
 }
 
 function ProductRow(props) {
-	return <h5>ProductRow</h5>;
+	return (
+		<tr className="Product-row">
+			<td>{props.name}</td>
+			<td>{props.price}</td>
+		</tr>
+	);
 }
 
 class ProductTable extends React.Component {
@@ -42,13 +49,33 @@ class ProductTable extends React.Component {
 	}
 
 	render() {
-		const splitCategories = this.splitCategories(this.props.model);
+		const cat = this.splitCategories(this.props.model);
+		const rows = [];
+
+		for(var i = 0; i < cat.length; ++i) {
+			rows.push(
+				<ProductCategoryRow category={cat[i].name}
+					key={cat[i].name} />
+			);
+			for (var j = 0; j < cat[i].products.length; ++j) {
+				rows.push(
+					<ProductRow name={cat[i].products[j].name}
+						key={cat[i].products[j].name}
+						price={cat[i].products[j].price} />
+				);
+			}
+		}
 
 		return (
-			<div>
-				<ProductCategoryRow />
-				<ProductRow />
-			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</table>
 		);
 	}
 }
