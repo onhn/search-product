@@ -23,10 +23,12 @@ class FilterableProductTable extends React.Component {
 		console.log('Searching for: ' + searchText +
 			' Only in stock: ' + onlyInStock);
 		let filteredModel = this.props.model.filter(o =>
-			(o.category.includes(searchText) ||
-			o.name.includes(searchText)) &&
-			o.stocked === onlyInStock
+			o.category.includes(searchText) ||
+			o.name.includes(searchText)
 		);
+		if (onlyInStock) {
+			filteredModel = filteredModel.filter(o => o.stocked);
+		}
 		console.log(filteredModel);
 		this.setState({
 			searchText,
@@ -42,7 +44,7 @@ class FilterableProductTable extends React.Component {
 					searchText={this.state.searchText}
 					onlyInStock={this.state.onlyInStock}
 					onSearchTextChange={this.onSearchTextChange} />
-				<ProductTable />
+				<ProductTable model={this.state.filteredModel} />
 			</div>
 		);
 	}
